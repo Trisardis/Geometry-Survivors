@@ -7,7 +7,8 @@ public class Player_Controller : MonoBehaviour
 
     public GameObject basicbullet; // Gets the bullet object
     public Transform firePoint; // Where the bullets spawn
-    public float projectilespeed = 70.0f; // Initial bullet speed
+    public float fireRate = 10f;
+    private float fireCountdown = 0f;
 
     void Start()
     {
@@ -45,12 +46,14 @@ public class Player_Controller : MonoBehaviour
             transform.rotation = Quaternion.Euler(Vector3.forward * -90);
         }
         
-
-
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        // Fire Projectile
+        if (fireCountdown <= 0f)
         {
             Shoot();
+            fireCountdown = 1f / fireRate;
+            
         }
+        fireCountdown -= Time.deltaTime;
     }
 
     void Shoot()
